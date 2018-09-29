@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 
-declare var google;
+declare var google: any;
 
 @IonicPage()
 @Component({
@@ -27,12 +27,18 @@ export class HomePage {
   }
 
   initMap() {
-    this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      zoom: 15,
-      center: {lat: -30.123191, lng: -51.176157}
-    });
+    const location = new google.maps.LatLng(-30.123190, -51.176157);
 
-    this.directionsDisplay.setMap(this.map);
+    const options = {
+      center: location,
+      zoom: 15
+    };
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, options).addMarker;
+
+    this.addMarker(location);
+
+    //this.directionsDisplay.setMap(this.map);
   }
 
   calculateAndDisplayRoute() {
@@ -46,6 +52,13 @@ export class HomePage {
       } else {
         window.alert('Directions request failed due to ' + status);
       }
+    });
+  }
+
+  addMarker(position){
+    return new google.maps.Marker({
+      position: position,
+      title: 'Você está aqui!'
     });
   }
 
