@@ -1,6 +1,8 @@
 {
   "name": "iTurist",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular",
   "pro_id": "fa01e978"
 }
