@@ -27,7 +27,6 @@ export class HomePage {
   }
 
   initMap() {
-<<<<<<< HEAD
     const location = new google.maps.LatLng(-30.123190, -51.176157);
 
     const options = {
@@ -35,17 +34,9 @@ export class HomePage {
       zoom: 15
     };
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, options).addMarker;
+    this.map = new google.maps.Map(this.mapElement.nativeElement, options);
 
-    this.addMarker(location);
-=======
-    this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      zoom: 17,
-      center: {lat: 41.85, lng: -87.65}
-    });
->>>>>>> e1215a3a613a9e72e24e70b0f4be80f7217282f9
-
-    //this.directionsDisplay.setMap(this.map);
+    //this.addMarker(location, map);
   }
 
   calculateAndDisplayRoute() {
@@ -60,24 +51,11 @@ export class HomePage {
         window.alert('Directions request failed due to ' + status);
       }
     });
-  
-  addMarker(position, map){
+  }
+  /*addMarker(position, map){
     return new google.maps.Marker({
       position,
       map
     })
-  }
-
-<<<<<<< HEAD
-  addMarker(position){
-    return new google.maps.Marker({
-      position: position,
-      title: 'Você está aqui!'
-    });
-  }
-
+  }*/
 }
-=======
-  }
-}
->>>>>>> e1215a3a613a9e72e24e70b0f4be80f7217282f9
