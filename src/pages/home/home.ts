@@ -31,12 +31,11 @@ export class HomePage {
 
     const options = {
       center: location,
-      zoom: 15
+      zoom: 15,
+      disableDefaultUI: true
     };
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, options);
-
-    //this.addMarker(location, map);
+    this.map = new google.maps.Map(document.getElementById('map'), options);
   }
 
   calculateAndDisplayRoute() {
@@ -52,10 +51,15 @@ export class HomePage {
       }
     });
   }
-  /*addMarker(position, map){
-    return new google.maps.Marker({
-      position,
-      map
-    })
-  }*/
+
+  const marker = new google.maps.Marker({
+      position: location,
+      map: this.map,
+
+      //Titulo
+      title: 'Sua Posição',
+
+      //Animção
+      animation: google.maps.Animation.DROP
+    });
 }
