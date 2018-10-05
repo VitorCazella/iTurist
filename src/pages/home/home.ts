@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
+
+import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google: any;
 
@@ -13,13 +15,30 @@ export class HomePage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  lat: any;
+  long: any;
   start = 'chicago, il';
   end = 'chicago, il';
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
 
-  constructor(public navCtrl: NavController) {
+  constructor(
+    public navCtrl: NavController,
+    private geo: Geolocation,
+    private platform: Platform
+  ) {
+      this.platform.ready().then(() => {
 
+      this.geo.getCurrentPosition().then(res => {
+      this.lat = res.coords.latitude;
+      this.long = res.coords.longitude;
+
+      alert("latitude: " + this.lat);
+      alert("longitude: " + this.long);
+      }).catch(() => {
+      alert("erro ao pegar geolocalizacao ");
+      })
+    })
   }
 
   ionViewDidLoad(){
@@ -27,25 +46,70 @@ export class HomePage {
   }
 
   initMap() {
-<<<<<<< HEAD
-    const location = new google.maps.LatLng(-30.123190, -51.176157);
+    var styledMapType = new google.maps.StyledMapType(
+            [
+              {
+                "featureType": "administrative",
+                "elementType": "geometry",
+                "stylers": [{"visibility": "off"}]
+              },
+              {
+                "featureType": "poi",
+                "stylers": [{"visibility": "off"}]
+              },
+              {
+                "featureType": "poi",
+                "elementType": "labels.icon",
+                "stylers": [{"color": "#5745f5"}]
+              },
+              {
+                "featureType": "road",
+                "elementType": "labels.icon",
+                "stylers": [{"visibility": "off"}]
+              },
+              {
+                "featureType": "transit",
+                "stylers": [{"visibility": "off"}]
+              }
+            ],
+            {name: 'Personalizado'});
+
+    const location = new google.maps.LatLng(-30.0245121, -51.195155299999996);
 
     const options = {
       center: location,
-      zoom: 15
+      zoom: 16,
+      disableDefaultUI: false,
+      zoomControl: false,
+      mapTypeControl: true,
+      scaleControl: false,
+      streetViewControl: false,
+      rotateControl: true,
+      fullscreenControl: false,
+      mapTypeControlOptions: {
+            mapTypeIds: ['roadmap', 'styled_map']
+          }
     };
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, options).addMarker;
+    this.map = new google.maps.Map(document.getElementById('map'), options);
 
-    this.addMarker(location);
-=======
-    this.map = new google.maps.Map(this.mapElement.nativeElement, {
-      zoom: 17,
-      center: {lat: 41.85, lng: -87.65}
-    });
->>>>>>> e1215a3a613a9e72e24e70b0f4be80f7217282f9
+     var image = 'assets/imgs/avatar.png';
 
-    //this.directionsDisplay.setMap(this.map);
+    const marker = new google.maps.Marker({
+        position: location,
+        map: this.map,
+        icon: image,
+
+        //Titulo
+        title: 'Sua Posição',
+
+        //Animção
+        animation: google.maps.Animation.DROP
+      });
+
+      this.map.mapTypes.set('styled_map', styledMapType);
+      this.map.setMapTypeId('styled_map');
+
   }
 
   calculateAndDisplayRoute() {
@@ -60,24 +124,6 @@ export class HomePage {
         window.alert('Directions request failed due to ' + status);
       }
     });
-  
-  addMarker(position, map){
-    return new google.maps.Marker({
-      position,
-      map
-    })
-  }
-
-<<<<<<< HEAD
-  addMarker(position){
-    return new google.maps.Marker({
-      position: position,
-      title: 'Você está aqui!'
-    });
   }
 
 }
-=======
-  }
-}
->>>>>>> e1215a3a613a9e72e24e70b0f4be80f7217282f9
