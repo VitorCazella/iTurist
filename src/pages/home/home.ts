@@ -26,26 +26,14 @@ export class HomePage {
     public navCtrl: NavController,
     private geo: Geolocation,
     private platform: Platform
-  ) {
-      this.platform.ready().then(() => {
-
-      this.geo.getCurrentPosition().then(res => {
-      this.lat = res.coords.latitude;
-      this.long = res.coords.longitude;
-
-      alert("latitude: " + this.lat);
-      alert("longitude: " + this.long);
-      }).catch(() => {
-      alert("erro ao pegar geolocalizacao ");
-      })
-    })
-  }
+  ) { }
 
   ionViewDidLoad(){
     this.initMap();
   }
 
   initMap() {
+  this.platform.ready().then(() => {
     var styledMapType = new google.maps.StyledMapType(
             [
               {
@@ -74,42 +62,50 @@ export class HomePage {
             ],
             {name: 'Personalizado'});
 
-    const location = new google.maps.LatLng(-30.0245121, -51.195155299999996);
+    this.geo.getCurrentPosition().then(res => {
+      this.lat = res.coords.latitude;
+      this.long = res.coords.longitude;
 
-    const options = {
-      center: location,
-      zoom: 16,
-      disableDefaultUI: false,
-      zoomControl: false,
-      mapTypeControl: true,
-      scaleControl: false,
-      streetViewControl: false,
-      rotateControl: true,
-      fullscreenControl: false,
-      mapTypeControlOptions: {
-            mapTypeIds: ['roadmap', 'styled_map']
-          }
-    };
+      alert("latitude: " + this.lat);
+      alert("longitude: " + this.long);
+      const location = new google.maps.LatLng(this.lat, this.long);
 
-    this.map = new google.maps.Map(document.getElementById('map'), options);
+      const options = {
+        center: location,
+        zoom: 16,
+        disableDefaultUI: false,
+        zoomControl: false,
+        mapTypeControl: true,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: true,
+        fullscreenControl: false,
+        mapTypeControlOptions: {
+              mapTypeIds: ['roadmap', 'styled_map']
+            }
+      };
 
-     var image = 'assets/imgs/avatar.png';
+      this.map = new google.maps.Map(document.getElementById('map'), options);
+      var image = 'assets/imgs/avatar.png';
 
-    const marker = new google.maps.Marker({
-        position: location,
-        map: this.map,
-        icon: image,
+      const marker = new google.maps.Marker({
+          position: location,
+          map: this.map,
+          icon: image,
 
-        //Titulo
-        title: 'Sua Posição',
+          //Titulo
+          title: 'Sua Posição',
 
-        //Animção
-        animation: google.maps.Animation.DROP
-      });
+          //Animção
+          animation: google.maps.Animation.DROP
+        });
 
-      this.map.mapTypes.set('styled_map', styledMapType);
-      this.map.setMapTypeId('styled_map');
-
+        this.map.setMapTypeId('styled_map');
+        this.map.mapTypes.set('styled_map', styledMapType);
+    }).catch(() => {
+      alert("erro ao pegar geolocalizacao ");
+    })
+  })
   }
 
   calculateAndDisplayRoute() {
