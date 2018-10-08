@@ -66,8 +66,6 @@ export class HomePage {
       this.lat = res.coords.latitude;
       this.long = res.coords.longitude;
 
-      alert("latitude: " + this.lat);
-      alert("longitude: " + this.long);
       const location = new google.maps.LatLng(this.lat, this.long);
 
       const options = {
@@ -94,7 +92,7 @@ export class HomePage {
           icon: image,
 
           //Titulo
-          title: 'Sua Posição',
+          title: 'Você está aqui!',
 
           //Animção
           animation: google.maps.Animation.DROP
