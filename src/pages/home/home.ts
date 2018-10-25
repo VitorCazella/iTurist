@@ -43,7 +43,7 @@ export class HomePage {
               },
               {
                 "featureType": "poi",
-                "stylers": [{"visibility": "off"}]
+                "stylers": [{"visibility": "on"}]
               },
               {
                 "featureType": "poi",
@@ -77,10 +77,7 @@ export class HomePage {
         scaleControl: false,
         streetViewControl: false,
         rotateControl: true,
-        fullscreenControl: false,
-        mapTypeControlOptions: {
-              mapTypeIds: ['roadmap', 'styled_map']
-            }
+        fullscreenControl: false
       };
 
       this.map = new google.maps.Map(document.getElementById('map'), options);
@@ -97,6 +94,7 @@ export class HomePage {
           //Animção
           animation: google.maps.Animation.DROP
         });
+        console.log(marker);
 
         this.map.setMapTypeId('styled_map');
         this.map.mapTypes.set('styled_map', styledMapType);
