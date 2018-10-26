@@ -47,8 +47,7 @@ export class HomePage {
               },
               {
                 "featureType": "poi",
-                "elementType": "labels.icon",
-                "stylers": [{"color": "#5745f5"}]
+                "elementType": "labels.icon"
               },
               {
                 "featureType": "road",
@@ -60,7 +59,7 @@ export class HomePage {
                 "stylers": [{"visibility": "off"}]
               }
             ],
-            {name: 'Personalizado'});
+            {name: 'Padrão'});
 
     this.geo.getCurrentPosition().then(res => {
       this.lat = res.coords.latitude;
@@ -77,7 +76,12 @@ export class HomePage {
         scaleControl: false,
         streetViewControl: false,
         rotateControl: true,
-        fullscreenControl: false
+        fullscreenControl: false,
+        /*mapTypeControlOptions: {
+          position: google.maps.ControlPosition.TOP_CENTER,
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          mapTypeIds: ['roadmap', 'satellite', 'styled_map']
+        }*/
       };
 
       this.map = new google.maps.Map(document.getElementById('map'), options);

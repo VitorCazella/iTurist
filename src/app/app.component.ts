@@ -13,7 +13,7 @@ import { SobrePage } from '../pages/sobre/sobre';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: string = 'HomePage';
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
 
