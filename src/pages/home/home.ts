@@ -72,16 +72,16 @@ export class HomePage {
         zoom: 16,
         disableDefaultUI: false,
         zoomControl: false,
-        mapTypeControl: true,
+        mapTypeControl: false,
         scaleControl: false,
         streetViewControl: false,
         rotateControl: true,
         fullscreenControl: false,
-        /*mapTypeControlOptions: {
+        mapTypeControlOptions: {
           position: google.maps.ControlPosition.TOP_CENTER,
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
           mapTypeIds: ['roadmap', 'satellite', 'styled_map']
-        }*/
+        }
       };
 
       this.map = new google.maps.Map(document.getElementById('map'), options);
