@@ -7,5 +7,14 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+  <ion-fab right top float>
+    <button ion-fab color="light" mini><ion-icon name="md-apps"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab><ion-icon (tap)="tapEvent($event)"><img src="assets/pointersIcon/park_marinha.png" style="width: 100%;"></ion-icon></button>
+      <button ion-fab><ion-icon (tap)="tap2Event($event)"><img src="assets/pointersIcon/lacador.png" style="width: 100%;"></ion-icon></button>
+      <button ion-fab><ion-icon (tap)="tap3Event($event)"><img src="assets/pointersIcon/beirario.png" style="width: 100%;"></ion-icon></button>
+      <button ion-fab><ion-icon (tap)="tap4Event($event)"><img src="assets/pointersIcon/arena.png" style="width: 100%;"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
   <div #map id="map"></div>
 </ion-content>

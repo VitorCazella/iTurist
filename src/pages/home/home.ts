@@ -17,8 +17,14 @@ export class HomePage {
   map: any;
   lat: any;
   long: any;
-  start = 'chicago, il';
-  end = 'chicago, il';
+
+  locationMarkerMarinha: any;
+  locationMarkerLacador: any;
+  locationMarkerBeiraRio: any;
+  locationMarkerArena: any;
+
+
+
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
 
@@ -43,7 +49,7 @@ export class HomePage {
               },
               {
                 "featureType": "poi",
-                "stylers": [{"visibility": "on"}]
+                "stylers": [{"visibility": "off"}]
               },
               {
                 "featureType": "poi",
@@ -80,7 +86,7 @@ export class HomePage {
         mapTypeControlOptions: {
           position: google.maps.ControlPosition.TOP_CENTER,
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          mapTypeIds: ['roadmap', 'satellite', 'styled_map']
+          mapTypeIds: ['styled_map']
         }
       };
 
@@ -98,27 +104,97 @@ export class HomePage {
           //Animção
           animation: google.maps.Animation.DROP
         });
-        console.log(marker);
 
         this.map.setMapTypeId('styled_map');
         this.map.mapTypes.set('styled_map', styledMapType);
-    }).catch(() => {
-      alert("erro ao pegar geolocalizacao ");
-    })
-  })
+
+        this.directionsDisplay.setMap(this.map);
+        this.markerCreate();
+      }).catch(() => {
+        alert("erro ao pegar geolocalizacao ");
+      });
+    });
   }
 
-  calculateAndDisplayRoute() {
-    this.directionsService.route({
-      origin: this.start,
-      destination: this.end,
-      travelMode: 'DRIVING'
-    }, (response, status) => {
-      if (status === 'OK') {
-        this.directionsDisplay.setDirections(response);
-      } else {
-        window.alert('Directions request failed due to ' + status);
-      }
+  tapEvent(e){
+    this.calculateAndDisplayRoute(this.locationMarkerMarinha);
+  }
+
+  tap2Event(e){
+    this.calculateAndDisplayRoute(this.locationMarkerLacador);
+  }
+
+  tap3Event(e){
+    this.calculateAndDisplayRoute(this.locationMarkerBeiraRio);
+  }
+
+  tap4Event(e){
+    this.calculateAndDisplayRoute(this.locationMarkerArena);
+  }
+
+  markerCreate(){
+    var path = 'assets/pointersIcon/';
+
+    this.locationMarkerMarinha = new google.maps.LatLng(-30.049268, -51.229990);
+
+    var markerMarinha = new google.maps.Marker({
+      position: this.locationMarkerMarinha,
+      icon: path + 'park_marinha.png',
+      map: this.map,
+      title: 'Parque Marinha do Brasil'
+    });
+    markerMarinha.addListener('click', function() {
+      this.calculateAndDisplayRoute(this.locationMarkerMarinha);
+    });
+
+    this.locationMarkerLacador = new google.maps.LatLng(-29.991299, -51.184487);
+
+    var markerLacador = new google.maps.Marker({
+
+      position: this.locationMarkerLacador,
+      icon: path + 'lacador.png',
+      map: this.map,
+      title: 'Monumento ao Laçador'
+    });
+
+    this.locationMarkerBeiraRio = new google.maps.LatLng(-30.065439, -51.235889);
+
+    var markerBeiraRio = new google.maps.Marker({
+      position: this.locationMarkerBeiraRio,
+      icon: path + 'beirario.png',
+      map: this.map,
+      title: 'Estádio Beira Rio'
+    });
+
+    this.locationMarkerArena = new google.maps.LatLng(-29.974095, -51.194981);
+
+    var markerArena = new google.maps.Marker({
+      position: this.locationMarkerArena,
+      icon: path + 'arena.png',
+      map: this.map,
+      title: 'Arena do Grêmio'
+    });
+  }
+
+  calculateAndDisplayRoute(dest) {
+    this.geo.getCurrentPosition().then(res => {
+      this.lat = res.coords.latitude;
+      this.long = res.coords.longitude;
+
+      const location = new google.maps.LatLng(this.lat, this.long);
+
+      this.directionsService.route({
+        origin: location,
+        destination: dest,
+        travelMode: 'DRIVING'
+      }, (response, status) => {
+        if (status === 'OK') {
+          this.directionsDisplay.setOptions({suppressMarkers: true});
+          this.directionsDisplay.setDirections(response);
+        } else {
+          window.alert('Directions request failed due to ' + status);
+        }
+      });
     });
   }
 
